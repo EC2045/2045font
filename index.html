@@ -282,8 +282,9 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   </div>
 </div>
 
-<script type="module">
-import opentype from 'https://cdn.jsdelivr.net/npm/opentype.js/+esm';
+<script src="https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.min.js"></script>
+<script>
+(async () => {
 
 // ── カスタム名前マップ（記号類）──────────────────────────────
 // フォントが更新されても記号の「ONVA名」はここだけ管理
@@ -427,7 +428,12 @@ window.switchTab = function (name) {
 
 // ── メイン：opentype.js でフォント解析 ───────────────────────
 try {
-  const font = await opentype.load('https://ec2045.github.io/2045font/2045alphabet.otf');
+  const font = await new Promise((resolve, reject) => {
+    opentype.load('https://ec2045.github.io/2045font/2045alphabet.otf', (err, f) => {
+      if (err) reject(typeof err === 'string' ? new Error(err) : (err || new Error('unknown error')));
+      else resolve(f);
+    });
+  });
 
   // .notdef・スペース除外、unicodeあるグリフのみ取得
   const chars = Object.values(font.glyphs.glyphs)
@@ -453,9 +459,13 @@ try {
   nextQ();
 
 } catch (err) {
+  const msg = (err && (err.message || err.toString())) || JSON.stringify(err) || 'unknown';
   document.getElementById('loading').innerHTML =
-    `<p style="color:#ff6060">フォントの読み込みに失敗しました<br><small>${err.message}</small></p>`;
+    `<p style="color:#ff6060">フォントの読み込みに失敗しました<br><small>${msg}</small></p>
+     <pre style="color:#aaa;font-size:11px;margin-top:1rem;text-align:left;max-width:600px;margin:1rem auto;white-space:pre-wrap">${JSON.stringify(err, Object.getOwnPropertyNames(err||{}), 2)}</pre>`;
+  console.error('opentype load error:', err);
 }
+})();
 </script>
 </body>
 </html>
