@@ -33,11 +33,7 @@ body {
   padding: 2rem 1.5rem;
 }
 
-.header {
-  max-width: 720px;
-  margin: 0 auto 2.5rem;
-}
-
+.header { max-width: 720px; margin: 0 auto 2.5rem; }
 .header h1 {
   font-family: '2045alphabet', sans-serif;
   font-size: 48px;
@@ -47,11 +43,25 @@ body {
   line-height: 1;
   margin-bottom: 0.5rem;
 }
+.header p { font-size: 13px; color: var(--muted); }
 
-.header p {
-  font-size: 13px;
+/* ローディング */
+#loading {
+  max-width: 720px;
+  margin: 2rem auto;
+  text-align: center;
   color: var(--muted);
+  font-size: 13px;
 }
+.spinner {
+  width: 24px; height: 24px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 1rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .tabs {
   display: flex;
@@ -59,9 +69,7 @@ body {
   max-width: 720px;
   margin: 0 auto 1.5rem;
   border-bottom: 1px solid var(--border);
-  padding-bottom: 0;
 }
-
 .tab {
   padding: 8px 18px;
   font-size: 13px;
@@ -81,7 +89,6 @@ body {
 .panel.active { display: block; }
 
 .section { margin-bottom: 2rem; }
-
 .section-title {
   font-size: 11px;
   letter-spacing: 0.1em;
@@ -97,9 +104,7 @@ table {
   border-radius: var(--radius);
   overflow: hidden;
 }
-
 thead tr { background: var(--surface); }
-
 th {
   font-size: 11px;
   color: var(--muted);
@@ -109,7 +114,6 @@ th {
   border-bottom: 1px solid var(--border);
   letter-spacing: 0.06em;
 }
-
 td {
   padding: 10px 14px;
   border-bottom: 1px solid var(--border);
@@ -124,7 +128,6 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   color: var(--text);
   line-height: 1;
 }
-
 .label {
   font-size: 12px;
   color: var(--muted);
@@ -137,7 +140,6 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
   gap: 6px;
 }
-
 .cell {
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -173,7 +175,6 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   padding: 2.5rem 2rem;
   text-align: center;
 }
-
 .quiz-glyph {
   font-family: '2045alphabet', sans-serif;
   font-size: 96px;
@@ -182,13 +183,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   margin-bottom: 1.5rem;
   color: var(--text);
 }
-
-.quiz-sub {
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 1.5rem;
-}
-
+.quiz-sub { font-size: 12px; color: var(--muted); margin-bottom: 1.5rem; }
 .choices {
   display: flex;
   justify-content: center;
@@ -196,7 +191,6 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   flex-wrap: wrap;
   margin-bottom: 1.25rem;
 }
-
 .choice {
   min-width: 60px;
   padding: 10px 20px;
@@ -212,9 +206,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 .choice:hover { border-color: var(--border-hover); }
 .choice.correct { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
 .choice.wrong { background: rgba(255,60,60,0.1); border-color: rgba(255,60,60,0.4); color: #ff6060; }
-
 .quiz-msg { font-size: 14px; color: var(--muted); min-height: 20px; margin-bottom: 1.25rem; }
-
 .next-btn {
   padding: 9px 24px;
   border: 1px solid var(--border-hover);
@@ -227,13 +219,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   transition: background 0.1s;
 }
 .next-btn:hover { background: rgba(255,255,255,0.05); }
-
-.score {
-  text-align: center;
-  margin-top: 1.25rem;
-  font-size: 13px;
-  color: var(--muted);
-}
+.score { text-align: center; margin-top: 1.25rem; font-size: 13px; color: var(--muted); }
 .score span { color: var(--text); font-weight: 500; }
 </style>
 </head>
@@ -244,79 +230,128 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   <p>ONVAの世界で日常的に使われるアルファベット — フォント学習ガイド</p>
 </div>
 
-<div class="tabs">
-  <button class="tab active" onclick="switchTab('table')">一覧表</button>
-  <button class="tab" onclick="switchTab('browse')">ブラウズ</button>
-  <button class="tab" onclick="switchTab('quiz')">クイズ</button>
+<div id="loading">
+  <div class="spinner"></div>
+  フォントを解析中...
 </div>
 
-<div id="panel-table" class="panel active">
-  <div class="section">
-    <div class="section-title">大文字</div>
-    <table><thead><tr><th>2045</th><th>文字</th><th>2045</th><th>文字</th><th>2045</th><th>文字</th></tr></thead><tbody id="upper-tbody"></tbody></table>
+<div id="app" style="display:none">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('table')">一覧表</button>
+    <button class="tab" onclick="switchTab('browse')">ブラウズ</button>
+    <button class="tab" onclick="switchTab('quiz')">クイズ</button>
   </div>
-  <div class="section">
-    <div class="section-title">小文字</div>
-    <table><thead><tr><th>2045</th><th>文字</th><th>2045</th><th>文字</th><th>2045</th><th>文字</th></tr></thead><tbody id="lower-tbody"></tbody></table>
+
+  <div id="panel-table" class="panel active">
+    <div class="section">
+      <div class="section-title">大文字</div>
+      <table><thead><tr><th>2045</th><th>文字</th><th>2045</th><th>文字</th><th>2045</th><th>文字</th></tr></thead><tbody id="upper-tbody"></tbody></table>
+    </div>
+    <div class="section">
+      <div class="section-title">小文字</div>
+      <table><thead><tr><th>2045</th><th>文字</th><th>2045</th><th>文字</th><th>2045</th><th>文字</th></tr></thead><tbody id="lower-tbody"></tbody></table>
+    </div>
+    <div class="section">
+      <div class="section-title">数字</div>
+      <table><thead><tr><th>2045</th><th>文字</th><th>2045</th><th>文字</th><th>2045</th><th>文字</th></tr></thead><tbody id="num-tbody"></tbody></table>
+    </div>
+    <div class="section">
+      <div class="section-title">記号</div>
+      <table><thead><tr><th>2045</th><th>文字</th><th>2045</th><th>文字</th><th>2045</th><th>文字</th></tr></thead><tbody id="sym-tbody"></tbody></table>
+    </div>
   </div>
-  <div class="section">
-    <div class="section-title">数字</div>
-    <table><thead><tr><th>2045</th><th>文字</th><th>2045</th><th>文字</th><th>2045</th><th>文字</th></tr></thead><tbody id="num-tbody"></tbody></table>
+
+  <div id="panel-browse" class="panel">
+    <div class="grid" id="browse-grid"></div>
+    <div class="detail" id="detail">
+      <span class="g" id="d-glyph"></span>
+      <div class="detail-name" id="d-name"></div>
+      <div class="detail-uni" id="d-uni"></div>
+    </div>
   </div>
-  <div class="section">
-    <div class="section-title">記号</div>
-    <table><thead><tr><th>2045</th><th>文字</th><th>2045</th><th>文字</th><th>2045</th><th>文字</th></tr></thead><tbody id="sym-tbody"></tbody></table>
+
+  <div id="panel-quiz" class="panel">
+    <div class="quiz-box">
+      <span class="quiz-glyph" id="q-glyph"></span>
+      <div class="quiz-sub">この文字はどれ？</div>
+      <div class="choices" id="choices"></div>
+      <div class="quiz-msg" id="q-msg"></div>
+      <button class="next-btn" onclick="nextQ()">次へ →</button>
+    </div>
+    <div class="score">スコア: <span id="score-disp">0 / 0</span></div>
   </div>
 </div>
 
-<div id="panel-browse" class="panel">
-  <div class="grid" id="browse-grid"></div>
-  <div class="detail" id="detail">
-    <span class="g" id="d-glyph"></span>
-    <div class="detail-name" id="d-name"></div>
-    <div class="detail-uni" id="d-uni"></div>
-  </div>
-</div>
+<script type="module">
+import opentype from 'https://cdn.jsdelivr.net/npm/opentype.js/+esm';
 
-<div id="panel-quiz" class="panel">
-  <div class="quiz-box">
-    <span class="quiz-glyph" id="q-glyph"></span>
-    <div class="quiz-sub">この文字はどれ？</div>
-    <div class="choices" id="choices"></div>
-    <div class="quiz-msg" id="q-msg"></div>
-    <button class="next-btn" onclick="nextQ()">次へ →</button>
-  </div>
-  <div class="score">スコア: <span id="score-disp">0 / 0</span></div>
-</div>
-
-<script>
-const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-const LOWER = 'abcdefghijklmnopqrstuvwxyz'.split('');
-const NUM   = '1234567890'.split('');
-const SYM   = ['@','#','&','*','(',')','"',"'",'%','-','+','=','/','<','>',';',':','!','?','[',']','{','}','~','$','®','ä','ï','ü','ë','ö','—'];
-
-const NAMES = {
-  '@':'アット','#':'ハッシュ','&':'アンパサンド','*':'アスタリスク','(':'開き括弧',')':'閉じ括弧',
-  '"':'ダブルクォート',"'":'シングルクォート','%':'パーセント','-':'ハイフン','+':'プラス',
-  '=':'イコール','/':'スラッシュ',';':'セミコロン',':':'コロン','!':'感嘆符','?':'疑問符',
-  '[':'開き角括弧',']':'閉じ角括弧','{':'開き波括弧','}':'閉じ波括弧','<':'小なり','>':'大なり',
-  '~':'チルダ','$':'ドル','®':'登録商標','ä':'a-キカンホ','ï':'i-キカンホ',
-  'ü':'u-キカンホ','ë':'e-キカンホ','ö':'o-キカンホ','—':'ダッシュ'
+// ── カスタム名前マップ（記号類）──────────────────────────────
+// フォントが更新されても記号の「ONVA名」はここだけ管理
+const CUSTOM_NAMES = {
+  '@': 'アットベータ',
+  '#': 'ハッシュ',
+  '&': 'アンパサンド',
+  '*': 'アスタリスク',
+  '(': '開き括弧',
+  ')': '閉じ括弧',
+  '"': 'ダブルクォート',
+  "'": 'シングルクォート',
+  '%': 'パーセント',
+  '-': 'ハイフン',
+  '+': 'プラス',
+  '=': 'イコール',
+  '/': 'スラッシュ',
+  '<': '小なり',
+  '>': '大なり',
+  ';': 'セミコロン',
+  ':': 'コロン',
+  '!': 'ベタクラメーション',
+  '?': '疑問符',
+  '[': '開き角括弧',
+  ']': '閉じ角括弧',
+  '{': '開き波括弧',
+  '}': '閉じ波括弧',
+  '~': 'チルダ',
+  '$': 'ドル',
+  '®': '登録商標',
+  'ä': 'a-キカンホ',
+  'ï': 'i-キカンホ',
+  'ü': 'u-キカンホ',
+  'ë': 'e-キカンホ',
+  'ö': 'o-キカンホ',
+  '—': 'ダッシュ',
 };
 
-function name(c) { return NAMES[c] || c; }
+function glyphName(char) {
+  if (CUSTOM_NAMES[char]) return CUSTOM_NAMES[char];
+  return char; // 大文字・小文字・数字はそのまま
+}
 
+// ── Unicode範囲でカテゴリ分け ─────────────────────────────────
+function categorize(chars) {
+  const upper = [], lower = [], num = [], sym = [];
+  for (const c of chars) {
+    const cp = c.codePointAt(0);
+    if (cp >= 0x41 && cp <= 0x5A) upper.push(c);
+    else if (cp >= 0x61 && cp <= 0x7A) lower.push(c);
+    else if (cp >= 0x30 && cp <= 0x39) num.push(c);
+    else sym.push(c);
+  }
+  return { upper, lower, num, sym };
+}
+
+// ── テーブル描画 ──────────────────────────────────────────────
 function makeTable(arr, tbodyId) {
   const tb = document.getElementById(tbodyId);
   for (let i = 0; i < arr.length; i += 3) {
     const tr = document.createElement('tr');
     for (let j = 0; j < 3; j++) {
-      const c = arr[i+j];
+      const c = arr[i + j];
       const tdG = document.createElement('td');
       const tdL = document.createElement('td');
       if (c) {
         tdG.innerHTML = `<span class="g">${c}</span>`;
-        tdL.innerHTML = `<span class="label">${name(c)}</span>`;
+        tdL.innerHTML = `<span class="label">${glyphName(c)}</span>`;
       }
       tr.appendChild(tdG);
       tr.appendChild(tdL);
@@ -325,37 +360,37 @@ function makeTable(arr, tbodyId) {
   }
 }
 
-makeTable(UPPER, 'upper-tbody');
-makeTable(LOWER, 'lower-tbody');
-makeTable(NUM,   'num-tbody');
-makeTable(SYM,   'sym-tbody');
+// ── ブラウズグリッド ──────────────────────────────────────────
+function makeBrowse(all) {
+  const grid = document.getElementById('browse-grid');
+  all.forEach(c => {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.innerHTML = `<span class="g">${c}</span><span class="label">${glyphName(c)}</span>`;
+    cell.onclick = () => {
+      document.getElementById('d-glyph').textContent = c;
+      document.getElementById('d-name').textContent = glyphName(c);
+      document.getElementById('d-uni').textContent =
+        `U+${c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`;
+      document.getElementById('detail').classList.add('show');
+    };
+    grid.appendChild(cell);
+  });
+}
 
-const all = [...UPPER, ...LOWER, ...NUM, ...SYM];
-const grid = document.getElementById('browse-grid');
-all.forEach(c => {
-  const cell = document.createElement('div');
-  cell.className = 'cell';
-  cell.innerHTML = `<span class="g">${c}</span><span class="label">${name(c)}</span>`;
-  cell.onclick = () => {
-    document.getElementById('d-glyph').textContent = c;
-    document.getElementById('d-name').textContent = name(c);
-    document.getElementById('d-uni').textContent = `U+${c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')}`;
-    document.getElementById('detail').classList.add('show');
-  };
-  grid.appendChild(cell);
-});
-
-const quizPool = [...UPPER, ...LOWER, ...NUM];
+// ── クイズ ────────────────────────────────────────────────────
+let quizPool = [];
 let score = 0, total = 0, answered = false;
 
-function shuffle(a) { return [...a].sort(()=>Math.random()-0.5); }
+function shuffle(a) { return [...a].sort(() => Math.random() - 0.5); }
 
-function nextQ() {
+window.nextQ = function () {
+  if (!quizPool.length) return;
   answered = false;
   document.getElementById('q-msg').textContent = '';
-  const correct = quizPool[Math.floor(Math.random()*quizPool.length)];
+  const correct = quizPool[Math.floor(Math.random() * quizPool.length)];
   document.getElementById('q-glyph').textContent = correct;
-  const opts = shuffle([correct, ...shuffle(quizPool.filter(c=>c!==correct)).slice(0,3)]);
+  const opts = shuffle([correct, ...shuffle(quizPool.filter(c => c !== correct)).slice(0, 3)]);
   const box = document.getElementById('choices');
   box.innerHTML = '';
   opts.forEach(o => {
@@ -371,23 +406,56 @@ function nextQ() {
         document.getElementById('q-msg').textContent = '正解！';
       } else {
         btn.classList.add('wrong');
-        box.querySelectorAll('.choice').forEach(b=>{ if(b.textContent===correct) b.classList.add('correct'); });
+        box.querySelectorAll('.choice').forEach(b => {
+          if (b.textContent === correct) b.classList.add('correct');
+        });
         document.getElementById('q-msg').textContent = `不正解。正解は "${correct}"`;
       }
       document.getElementById('score-disp').textContent = `${score} / ${total}`;
     };
     box.appendChild(btn);
   });
-}
+};
 
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['table','browse','quiz'][i]===name));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.getElementById('panel-'+name).classList.add('active');
-  if (name==='quiz') nextQ();
-}
+window.switchTab = function (name) {
+  document.querySelectorAll('.tab').forEach((t, i) =>
+    t.classList.toggle('active', ['table', 'browse', 'quiz'][i] === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  if (name === 'quiz') nextQ();
+};
 
-nextQ();
+// ── メイン：opentype.js でフォント解析 ───────────────────────
+try {
+  const font = await opentype.load('https://ec2045.github.io/2045font/2045alphabet.otf');
+
+  // .notdef・スペース除外、unicodeあるグリフのみ取得
+  const chars = Object.values(font.glyphs.glyphs)
+    .filter(g => g.unicode && g.unicode > 32 && g.name !== '.notdef')
+    .map(g => String.fromCodePoint(g.unicode))
+    // 重複除去
+    .filter((c, i, a) => a.indexOf(c) === i);
+
+  const { upper, lower, num, sym } = categorize(chars);
+  const all = [...upper, ...lower, ...num, ...sym];
+
+  makeTable(upper, 'upper-tbody');
+  makeTable(lower, 'lower-tbody');
+  makeTable(num,   'num-tbody');
+  makeTable(sym,   'sym-tbody');
+  makeBrowse(all);
+
+  // クイズは大文字・小文字・数字のみ
+  quizPool = [...upper, ...lower, ...num];
+
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  nextQ();
+
+} catch (err) {
+  document.getElementById('loading').innerHTML =
+    `<p style="color:#ff6060">フォントの読み込みに失敗しました<br><small>${err.message}</small></p>`;
+}
 </script>
 </body>
 </html>
