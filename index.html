@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2045alphabet — ONVA Font Guide</title>
+<style>
+@font-face {
+  font-family: '2045alphabet';
+  src: url('https://ec2045.github.io/2045font/2045alphabet.otf') format('opentype');
+  font-display: swap;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0e0e0e;
+  --surface: #1a1a1a;
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.2);
+  --text: #f0f0f0;
+  --muted: #888;
+  --accent: #c8ff00;
+  --accent-dim: rgba(200,255,0,0.12);
+  --radius: 8px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans JP', 'Helvetica Neue', sans-serif;
+  min-height: 100vh;
+  padding: 2rem 1.5rem;
+}
+
+.header {
+  max-width: 720px;
+  margin: 0 auto 2.5rem;
+}
+
+.header h1 {
+  font-family: '2045alphabet', sans-serif;
+  font-size: 48px;
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  max-width: 720px;
+  margin: 0 auto 1.5rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+}
+
+.tab {
+  padding: 8px 18px;
+  font-size: 13px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-family: inherit;
+  transition: color 0.15s;
+}
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.panel { display: none; max-width: 720px; margin: 0 auto; }
+.panel.active { display: block; }
+
+.section { margin-bottom: 2rem; }
+
+.section-title {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+thead tr { background: var(--surface); }
+
+th {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: normal;
+  padding: 8px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.06em;
+}
+
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+
+.g {
+  font-family: '2045alphabet', sans-serif;
+  font-size: 26px;
+  color: var(--text);
+  line-height: 1;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: 'Courier New', monospace;
+}
+
+/* Browse */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: 6px;
+}
+
+.cell {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 4px 8px;
+  text-align: center;
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.cell:hover { border-color: var(--border-hover); background: rgba(255,255,255,0.04); }
+.cell .g { font-size: 22px; display: block; margin-bottom: 5px; }
+.cell .label { font-size: 10px; }
+
+.detail {
+  display: none;
+  margin-top: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+}
+.detail.show { display: block; }
+.detail .g { font-size: 80px; display: block; margin-bottom: 0.75rem; }
+.detail-name { font-size: 18px; color: var(--text); margin-bottom: 4px; }
+.detail-uni { font-size: 12px; color: var(--muted); font-family: monospace; }
+
+/* Quiz */
+.quiz-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+
+.quiz-glyph {
+  font-family: '2045alphabet', sans-serif;
+  font-size: 96px;
+  line-height: 1;
+  display: block;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+}
+
+.quiz-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.choices {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.choice {
+  min-width: 60px;
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 18px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.1s, background 0.1s;
+}
+.choice:hover { border-color: var(--border-hover); }
+.choice.correct { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+.choice.wrong { background: rgba(255,60,60,0.1); border-color: rgba(255,60,60,0.4); color: #ff6060; }
+
+.quiz-msg { font-size: 14px; color: var(--muted); min-height: 20px; margin-bottom: 1.25rem; }
+
+.next-btn {
+  padding: 9px 24px;
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.1s;
+}
+.next-btn:hover { background: rgba(255,255,255,0.05); }
+
+.score {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 13px;
+  color: var(--muted);
+}
+.score span { color: var(--text); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>2045alphabet</h1>
+  <p>ONVAの世界で日常的に使われるアルファベット — フォント学習ガイド</p>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('table')">一覧表</button>
+  <button class="tab" onclick="switchTab('browse')">ブラウズ</button>
+  <button class="tab" onclick="switchTab('quiz')">クイズ</button>
+</div>
+
+<div id="panel-table" class="panel active">
+  <div class="section">
+    <div class="section-title">大文字</div>
+    <table><thead><tr><th>2045</th><th>文字</th><th>2045</th><th>文字</th><th>2045</th><th>文字</th></tr></thead><tbody id="upper-tbody"></tbody></table>
+  </div>
+  <div class="section">
+    <div class="section-title">小文字</div>
+    <table><thead><tr><th>2045</th><th>文字</th><th>2045</th><th>文字</th><th>2045</th><th>文字</th></tr></thead><tbody id="lower-tbody"></tbody></table>
+  </div>
+  <div class="section">
+    <div class="section-title">数字</div>
+    <table><thead><tr><th>2045</th><th>文字</th><th>2045</th><th>文字</th><th>2045</th><th>文字</th></tr></thead><tbody id="num-tbody"></tbody></table>
+  </div>
+  <div class="section">
+    <div class="section-title">記号</div>
+    <table><thead><tr><th>2045</th><th>文字</th><th>2045</th><th>文字</th><th>2045</th><th>文字</th></tr></thead><tbody id="sym-tbody"></tbody></table>
+  </div>
+</div>
+
+<div id="panel-browse" class="panel">
+  <div class="grid" id="browse-grid"></div>
+  <div class="detail" id="detail">
+    <span class="g" id="d-glyph"></span>
+    <div class="detail-name" id="d-name"></div>
+    <div class="detail-uni" id="d-uni"></div>
+  </div>
+</div>
+
+<div id="panel-quiz" class="panel">
+  <div class="quiz-box">
+    <span class="quiz-glyph" id="q-glyph"></span>
+    <div class="quiz-sub">この文字はどれ？</div>
+    <div class="choices" id="choices"></div>
+    <div class="quiz-msg" id="q-msg"></div>
+    <button class="next-btn" onclick="nextQ()">次へ →</button>
+  </div>
+  <div class="score">スコア: <span id="score-disp">0 / 0</span></div>
+</div>
+
+<script>
+const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const LOWER = 'abcdefghijklmnopqrstuvwxyz'.split('');
+const NUM   = '1234567890'.split('');
+const SYM   = ['@','#','&','*','(',')','"',"'",'%','-','+','=','/','<','>',';',':','!','?','[',']','{','}','~','$','®','ä','ï','ü','ë','ö','—'];
+
+const NAMES = {
+  '@':'アット','#':'ハッシュ','&':'アンパサンド','*':'アスタリスク','(':'開き括弧',')':'閉じ括弧',
+  '"':'ダブルクォート',"'":'シングルクォート','%':'パーセント','-':'ハイフン','+':'プラス',
+  '=':'イコール','/':'スラッシュ',';':'セミコロン',':':'コロン','!':'感嘆符','?':'疑問符',
+  '[':'開き角括弧',']':'閉じ角括弧','{':'開き波括弧','}':'閉じ波括弧','<':'小なり','>':'大なり',
+  '~':'チルダ','$':'ドル','®':'登録商標','ä':'a-キカンホ','ï':'i-キカンホ',
+  'ü':'u-キカンホ','ë':'e-キカンホ','ö':'o-キカンホ','—':'ダッシュ'
+};
+
+function name(c) { return NAMES[c] || c; }
+
+function makeTable(arr, tbodyId) {
+  const tb = document.getElementById(tbodyId);
+  for (let i = 0; i < arr.length; i += 3) {
+    const tr = document.createElement('tr');
+    for (let j = 0; j < 3; j++) {
+      const c = arr[i+j];
+      const tdG = document.createElement('td');
+      const tdL = document.createElement('td');
+      if (c) {
+        tdG.innerHTML = `<span class="g">${c}</span>`;
+        tdL.innerHTML = `<span class="label">${name(c)}</span>`;
+      }
+      tr.appendChild(tdG);
+      tr.appendChild(tdL);
+    }
+    tb.appendChild(tr);
+  }
+}
+
+makeTable(UPPER, 'upper-tbody');
+makeTable(LOWER, 'lower-tbody');
+makeTable(NUM,   'num-tbody');
+makeTable(SYM,   'sym-tbody');
+
+const all = [...UPPER, ...LOWER, ...NUM, ...SYM];
+const grid = document.getElementById('browse-grid');
+all.forEach(c => {
+  const cell = document.createElement('div');
+  cell.className = 'cell';
+  cell.innerHTML = `<span class="g">${c}</span><span class="label">${name(c)}</span>`;
+  cell.onclick = () => {
+    document.getElementById('d-glyph').textContent = c;
+    document.getElementById('d-name').textContent = name(c);
+    document.getElementById('d-uni').textContent = `U+${c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')}`;
+    document.getElementById('detail').classList.add('show');
+  };
+  grid.appendChild(cell);
+});
+
+const quizPool = [...UPPER, ...LOWER, ...NUM];
+let score = 0, total = 0, answered = false;
+
+function shuffle(a) { return [...a].sort(()=>Math.random()-0.5); }
+
+function nextQ() {
+  answered = false;
+  document.getElementById('q-msg').textContent = '';
+  const correct = quizPool[Math.floor(Math.random()*quizPool.length)];
+  document.getElementById('q-glyph').textContent = correct;
+  const opts = shuffle([correct, ...shuffle(quizPool.filter(c=>c!==correct)).slice(0,3)]);
+  const box = document.getElementById('choices');
+  box.innerHTML = '';
+  opts.forEach(o => {
+    const btn = document.createElement('button');
+    btn.className = 'choice';
+    btn.textContent = o;
+    btn.onclick = () => {
+      if (answered) return;
+      answered = true; total++;
+      if (o === correct) {
+        score++;
+        btn.classList.add('correct');
+        document.getElementById('q-msg').textContent = '正解！';
+      } else {
+        btn.classList.add('wrong');
+        box.querySelectorAll('.choice').forEach(b=>{ if(b.textContent===correct) b.classList.add('correct'); });
+        document.getElementById('q-msg').textContent = `不正解。正解は "${correct}"`;
+      }
+      document.getElementById('score-disp').textContent = `${score} / ${total}`;
+    };
+    box.appendChild(btn);
+  });
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['table','browse','quiz'][i]===name));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  if (name==='quiz') nextQ();
+}
+
+nextQ();
+</script>
+</body>
+</html>
