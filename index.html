@@ -14,87 +14,120 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0e0e0e;
-  --surface: #1a1a1a;
-  --border: rgba(255,255,255,0.08);
-  --border-hover: rgba(255,255,255,0.2);
-  --text: #f0f0f0;
-  --muted: #888;
-  --accent: #c8ff00;
-  --accent-dim: rgba(200,255,0,0.12);
-  --radius: 8px;
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface2: #f0ede6;
+  --border: rgba(0,0,0,0.08);
+  --border-hover: rgba(0,0,0,0.2);
+  --text: #1a1a1a;
+  --muted: #999;
+  --accent-bg: #1a1a1a;
+  --accent-text: #ffffff;
+  --correct: #2d7d46;
+  --correct-bg: rgba(45,125,70,0.08);
+  --wrong: #c0392b;
+  --wrong-bg: rgba(192,57,43,0.08);
+  --radius: 6px;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Noto Sans JP', 'Helvetica Neue', sans-serif;
+  font-family: 'Georgia', 'Noto Serif JP', serif;
   min-height: 100vh;
-  padding: 2rem 1.5rem;
+  padding: 3rem 1.5rem 4rem;
 }
 
-.header { max-width: 720px; margin: 0 auto 2.5rem; }
-.header h1 {
+.header {
+  max-width: 740px;
+  margin: 0 auto 3rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.header-left h1 {
   font-family: '2045alphabet', sans-serif;
-  font-size: 48px;
+  font-size: 52px;
   font-weight: normal;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   color: var(--text);
   line-height: 1;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
 }
-.header p { font-size: 13px; color: var(--muted); }
+.header-left p {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.04em;
+}
+.header-badge {
+  font-size: 10px;
+  color: var(--muted);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 2px;
+}
 
-/* ローディング */
 #loading {
-  max-width: 720px;
-  margin: 2rem auto;
+  max-width: 740px;
+  margin: 3rem auto;
   text-align: center;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.06em;
 }
 .spinner {
-  width: 24px; height: 24px;
-  border: 2px solid var(--border);
-  border-top-color: var(--accent);
+  width: 20px; height: 20px;
+  border: 1.5px solid var(--border);
+  border-top-color: var(--text);
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: spin 0.9s linear infinite;
   margin: 0 auto 1rem;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .tabs {
   display: flex;
-  gap: 4px;
-  max-width: 720px;
-  margin: 0 auto 1.5rem;
+  max-width: 740px;
+  margin: 0 auto 2rem;
   border-bottom: 1px solid var(--border);
 }
 .tab {
-  padding: 8px 18px;
-  font-size: 13px;
+  padding: 9px 20px;
+  font-size: 12px;
   color: var(--muted);
   background: none;
   border: none;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
+  border-bottom: 1.5px solid transparent;
   margin-bottom: -1px;
-  font-family: inherit;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   transition: color 0.15s;
 }
 .tab:hover { color: var(--text); }
-.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab.active { color: var(--text); border-bottom-color: var(--text); }
 
-.panel { display: none; max-width: 720px; margin: 0 auto; }
+.panel { display: none; max-width: 740px; margin: 0 auto; }
 .panel.active { display: block; }
 
-.section { margin-bottom: 2rem; }
+.section { margin-bottom: 2.5rem; }
 .section-title {
-  font-size: 11px;
-  letter-spacing: 0.1em;
+  font-size: 10px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
   margin-bottom: 0.75rem;
+  font-family: 'Courier New', monospace;
 }
 
 table {
@@ -103,24 +136,27 @@ table {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
+  background: var(--surface);
 }
-thead tr { background: var(--surface); }
+thead tr { background: var(--surface2); }
 th {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--muted);
   font-weight: normal;
-  padding: 8px 14px;
+  padding: 7px 14px;
   text-align: left;
   border-bottom: 1px solid var(--border);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
 }
 td {
-  padding: 10px 14px;
+  padding: 9px 14px;
   border-bottom: 1px solid var(--border);
   vertical-align: middle;
 }
 tr:last-child td { border-bottom: none; }
-tr:hover td { background: rgba(255,255,255,0.02); }
+tr:hover td { background: var(--surface2); }
 
 .g {
   font-family: '2045alphabet', sans-serif;
@@ -129,16 +165,15 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   line-height: 1;
 }
 .label {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--muted);
   font-family: 'Courier New', monospace;
 }
 
-/* Browse */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(auto-fill, minmax(66px, 1fr));
+  gap: 5px;
 }
 .cell {
   border: 1px solid var(--border);
@@ -147,11 +182,11 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   text-align: center;
   background: var(--surface);
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  transition: border-color 0.12s, background 0.12s, transform 0.1s;
 }
-.cell:hover { border-color: var(--border-hover); background: rgba(255,255,255,0.04); }
+.cell:hover { border-color: var(--border-hover); background: var(--surface2); transform: translateY(-1px); }
 .cell .g { font-size: 22px; display: block; margin-bottom: 5px; }
-.cell .label { font-size: 10px; }
+.cell .label { font-size: 9px; }
 
 .detail {
   display: none;
@@ -159,40 +194,153 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 2rem;
+  padding: 2.5rem;
   text-align: center;
 }
 .detail.show { display: block; }
-.detail .g { font-size: 80px; display: block; margin-bottom: 0.75rem; }
-.detail-name { font-size: 18px; color: var(--text); margin-bottom: 4px; }
-.detail-uni { font-size: 12px; color: var(--muted); font-family: monospace; }
+.detail .g { font-size: 88px; display: block; margin-bottom: 0.75rem; }
+.detail-name { font-size: 16px; color: var(--text); margin-bottom: 4px; font-family: 'Courier New', monospace; }
+.detail-uni { font-size: 11px; color: var(--muted); font-family: 'Courier New', monospace; }
 
-/* Quiz */
+/* タイプ練習 */
+.type-area {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.type-label {
+  font-size: 10px;
+  color: var(--muted);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.type-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg);
+  outline: none;
+  resize: none;
+  transition: border-color 0.15s;
+  line-height: 1.6;
+}
+.type-input:focus { border-color: var(--border-hover); }
+.type-preview {
+  width: 100%;
+  min-height: 80px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-family: '2045alphabet', sans-serif;
+  font-size: 28px;
+  color: var(--text);
+  background: var(--surface2);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  word-break: break-all;
+  margin-top: 0.75rem;
+}
+.type-empty {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+.type-size-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+.type-size-label {
+  font-size: 10px;
+  color: var(--muted);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  width: 140px;
+  height: 2px;
+  background: var(--border);
+  border-radius: 1px;
+  outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--text);
+  cursor: pointer;
+}
+.type-size-val {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: 'Courier New', monospace;
+  min-width: 32px;
+}
+.sample-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.sample-chip {
+  font-size: 10px;
+  font-family: 'Courier New', monospace;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 4px 10px;
+  cursor: pointer;
+  background: none;
+  transition: border-color 0.1s, color 0.1s;
+  letter-spacing: 0.04em;
+}
+.sample-chip:hover { border-color: var(--border-hover); color: var(--text); }
+
+/* クイズ */
 .quiz-box {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 2.5rem 2rem;
+  padding: 3rem 2rem 2.5rem;
   text-align: center;
 }
 .quiz-glyph {
   font-family: '2045alphabet', sans-serif;
-  font-size: 96px;
+  font-size: 100px;
   line-height: 1;
   display: block;
   margin-bottom: 1.5rem;
   color: var(--text);
 }
-.quiz-sub { font-size: 12px; color: var(--muted); margin-bottom: 1.5rem; }
+.quiz-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 1.75rem;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 .choices {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 .choice {
-  min-width: 60px;
+  min-width: 56px;
   padding: 10px 20px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -201,33 +349,50 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   font-size: 18px;
   cursor: pointer;
   font-family: inherit;
-  transition: border-color 0.1s, background 0.1s;
+  transition: border-color 0.1s, background 0.1s, transform 0.08s;
 }
-.choice:hover { border-color: var(--border-hover); }
-.choice.correct { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
-.choice.wrong { background: rgba(255,60,60,0.1); border-color: rgba(255,60,60,0.4); color: #ff6060; }
-.quiz-msg { font-size: 14px; color: var(--muted); min-height: 20px; margin-bottom: 1.25rem; }
+.choice:hover { border-color: var(--border-hover); transform: translateY(-1px); }
+.choice.correct { background: var(--correct-bg); border-color: var(--correct); color: var(--correct); }
+.choice.wrong { background: var(--wrong-bg); border-color: var(--wrong); color: var(--wrong); }
+.quiz-msg {
+  font-size: 13px;
+  color: var(--muted);
+  min-height: 20px;
+  margin-bottom: 1.5rem;
+  font-family: 'Courier New', monospace;
+}
 .next-btn {
-  padding: 9px 24px;
-  border: 1px solid var(--border-hover);
+  padding: 9px 28px;
+  border: none;
   border-radius: var(--radius);
-  background: transparent;
-  color: var(--text);
-  font-size: 14px;
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  font-size: 12px;
   cursor: pointer;
-  font-family: inherit;
-  transition: background 0.1s;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: opacity 0.1s;
 }
-.next-btn:hover { background: rgba(255,255,255,0.05); }
-.score { text-align: center; margin-top: 1.25rem; font-size: 13px; color: var(--muted); }
-.score span { color: var(--text); font-weight: 500; }
+.next-btn:hover { opacity: 0.7; }
+.score {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 12px;
+  color: var(--muted);
+  font-family: 'Courier New', monospace;
+}
+.score span { color: var(--text); }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>2045alphabet</h1>
-  <p>ONVAの世界で日常的に使われるアルファベット — フォント学習ガイド</p>
+  <div class="header-left">
+    <h1>2045alphabet</h1>
+    <p>ONVAの世界で使われる文字 — フォント学習ガイド</p>
+  </div>
+  <div class="header-badge">ONVA / ec2045</div>
 </div>
 
 <div id="loading">
@@ -239,6 +404,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   <div class="tabs">
     <button class="tab active" onclick="switchTab('table')">一覧表</button>
     <button class="tab" onclick="switchTab('browse')">ブラウズ</button>
+    <button class="tab" onclick="switchTab('type')">タイプ練習</button>
     <button class="tab" onclick="switchTab('quiz')">クイズ</button>
   </div>
 
@@ -270,6 +436,21 @@ tr:hover td { background: rgba(255,255,255,0.02); }
     </div>
   </div>
 
+  <div id="panel-type" class="panel">
+    <div class="type-area">
+      <div class="type-label">入力 — ローマ字・記号をそのまま打つ</div>
+      <textarea class="type-input" id="type-input" rows="3" placeholder="Hello ONVA 2045..."></textarea>
+      <div class="type-size-row">
+        <span class="type-size-label">サイズ</span>
+        <input type="range" id="size-slider" min="16" max="72" value="28" oninput="updateSize()">
+        <span class="type-size-val" id="size-val">28px</span>
+      </div>
+      <div class="sample-row" id="sample-row"></div>
+    </div>
+    <div class="type-label" style="margin-bottom:0.5rem">プレビュー — 2045alphabet</div>
+    <div class="type-preview" id="type-preview"><span class="type-empty">ここに2045alphabetで表示されます</span></div>
+  </div>
+
   <div id="panel-quiz" class="panel">
     <div class="quiz-box">
       <span class="quiz-glyph" id="q-glyph"></span>
@@ -286,49 +467,22 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 <script>
 (async () => {
 
-// ── カスタム名前マップ（記号類）──────────────────────────────
-// フォントが更新されても記号の「ONVA名」はここだけ管理
 const CUSTOM_NAMES = {
-  '@': 'アットベータ',
-  '#': 'ハッシュ',
-  '&': 'アンパサンド',
-  '*': 'アスタリスク',
-  '(': '開き括弧',
-  ')': '閉じ括弧',
-  '"': 'ダブルクォート',
-  "'": 'シングルクォート',
-  '%': 'パーセント',
-  '-': 'ハイフン',
-  '+': 'プラス',
-  '=': 'イコール',
-  '/': 'スラッシュ',
-  '<': '小なり',
-  '>': '大なり',
-  ';': 'セミコロン',
-  ':': 'コロン',
-  '!': 'ベタクラメーション',
-  '?': '疑問符',
-  '[': '開き角括弧',
-  ']': '閉じ角括弧',
-  '{': '開き波括弧',
-  '}': '閉じ波括弧',
-  '~': 'チルダ',
-  '$': 'ドル',
-  '®': '登録商標',
-  'ä': 'a-キカンホ',
-  'ï': 'i-キカンホ',
-  'ü': 'u-キカンホ',
-  'ë': 'e-キカンホ',
-  'ö': 'o-キカンホ',
-  '—': 'ダッシュ',
+  '@': 'アットベータ', '#': 'ハッシュ', '&': 'アンパサンド', '*': 'アスタリスク',
+  '(': '開き括弧', ')': '閉じ括弧', '"': 'ダブルクォート', "'": 'シングルクォート',
+  '%': 'パーセント', '-': 'ハイフン', '+': 'プラス', '=': 'イコール',
+  '/': 'スラッシュ', '<': '小なり', '>': '大なり', ';': 'セミコロン',
+  ':': 'コロン', '!': 'ベタクラメーション', '?': '疑問符',
+  '[': '開き角括弧', ']': '閉じ角括弧', '{': '開き波括弧', '}': '閉じ波括弧',
+  '~': 'チルダ', '$': 'ドル', '®': '登録商標',
+  'ä': 'a-キカンホ', 'ï': 'i-キカンホ', 'ü': 'u-キカンホ', 'ë': 'e-キカンホ',
+  'ö': 'o-キカンホ', '—': 'ダッシュ',
 };
 
-function glyphName(char) {
-  if (CUSTOM_NAMES[char]) return CUSTOM_NAMES[char];
-  return char; // 大文字・小文字・数字はそのまま
-}
+const SAMPLES = ['Hello ONVA', 'ABCDEFGHIJKLM', 'nopqrstuvwxyz', '0123456789', 'The quick brown fox', '!? @# $%'];
 
-// ── Unicode範囲でカテゴリ分け ─────────────────────────────────
+function glyphName(c) { return CUSTOM_NAMES[c] || c; }
+
 function categorize(chars) {
   const upper = [], lower = [], num = [], sym = [];
   for (const c of chars) {
@@ -341,7 +495,6 @@ function categorize(chars) {
   return { upper, lower, num, sym };
 }
 
-// ── テーブル描画 ──────────────────────────────────────────────
 function makeTable(arr, tbodyId) {
   const tb = document.getElementById(tbodyId);
   for (let i = 0; i < arr.length; i += 3) {
@@ -361,7 +514,6 @@ function makeTable(arr, tbodyId) {
   }
 }
 
-// ── ブラウズグリッド ──────────────────────────────────────────
 function makeBrowse(all) {
   const grid = document.getElementById('browse-grid');
   all.forEach(c => {
@@ -371,21 +523,41 @@ function makeBrowse(all) {
     cell.onclick = () => {
       document.getElementById('d-glyph').textContent = c;
       document.getElementById('d-name').textContent = glyphName(c);
-      document.getElementById('d-uni').textContent =
-        `U+${c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`;
+      document.getElementById('d-uni').textContent = `U+${c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')}`;
       document.getElementById('detail').classList.add('show');
     };
     grid.appendChild(cell);
   });
 }
 
-// ── クイズ ────────────────────────────────────────────────────
-let quizPool = [];
-let score = 0, total = 0, answered = false;
+function initType() {
+  const input = document.getElementById('type-input');
+  const preview = document.getElementById('type-preview');
+  input.addEventListener('input', () => {
+    const v = input.value;
+    if (v) { preview.textContent = v; }
+    else { preview.innerHTML = '<span class="type-empty">ここに2045alphabetで表示されます</span>'; }
+  });
+  const sampleRow = document.getElementById('sample-row');
+  SAMPLES.forEach(s => {
+    const chip = document.createElement('button');
+    chip.className = 'sample-chip';
+    chip.textContent = s;
+    chip.onclick = () => { input.value = s; input.dispatchEvent(new Event('input')); };
+    sampleRow.appendChild(chip);
+  });
+}
 
+window.updateSize = function() {
+  const v = document.getElementById('size-slider').value;
+  document.getElementById('size-val').textContent = v + 'px';
+  document.getElementById('type-preview').style.fontSize = v + 'px';
+};
+
+let quizPool = [], score = 0, total = 0, answered = false;
 function shuffle(a) { return [...a].sort(() => Math.random() - 0.5); }
 
-window.nextQ = function () {
+window.nextQ = function() {
   if (!quizPool.length) return;
   answered = false;
   document.getElementById('q-msg').textContent = '';
@@ -407,9 +579,7 @@ window.nextQ = function () {
         document.getElementById('q-msg').textContent = '正解！';
       } else {
         btn.classList.add('wrong');
-        box.querySelectorAll('.choice').forEach(b => {
-          if (b.textContent === correct) b.classList.add('correct');
-        });
+        box.querySelectorAll('.choice').forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
         document.getElementById('q-msg').textContent = `不正解。正解は "${correct}"`;
       }
       document.getElementById('score-disp').textContent = `${score} / ${total}`;
@@ -418,40 +588,34 @@ window.nextQ = function () {
   });
 };
 
-window.switchTab = function (name) {
+window.switchTab = function(name) {
   document.querySelectorAll('.tab').forEach((t, i) =>
-    t.classList.toggle('active', ['table', 'browse', 'quiz'][i] === name));
+    t.classList.toggle('active', ['table','browse','type','quiz'][i] === name));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
   if (name === 'quiz') nextQ();
 };
 
-// ── メイン：opentype.js でフォント解析 ───────────────────────
 try {
   const font = await new Promise((resolve, reject) => {
     opentype.load('https://ec2045.github.io/2045font/2045alphabet.otf', (err, f) => {
-      if (err) reject(typeof err === 'string' ? new Error(err) : (err || new Error('unknown error')));
+      if (err) reject(typeof err === 'string' ? new Error(err) : (err || new Error('unknown')));
       else resolve(f);
     });
   });
 
-  // .notdef・スペース除外、unicodeあるグリフのみ取得
   const chars = Object.values(font.glyphs.glyphs)
     .filter(g => g.unicode && g.unicode > 32 && g.name !== '.notdef')
     .map(g => String.fromCodePoint(g.unicode))
-    // 重複除去
     .filter((c, i, a) => a.indexOf(c) === i);
 
   const { upper, lower, num, sym } = categorize(chars);
-  const all = [...upper, ...lower, ...num, ...sym];
-
   makeTable(upper, 'upper-tbody');
   makeTable(lower, 'lower-tbody');
   makeTable(num,   'num-tbody');
   makeTable(sym,   'sym-tbody');
-  makeBrowse(all);
-
-  // クイズは大文字・小文字・数字のみ
+  makeBrowse([...upper, ...lower, ...num, ...sym]);
+  initType();
   quizPool = [...upper, ...lower, ...num];
 
   document.getElementById('loading').style.display = 'none';
@@ -461,10 +625,11 @@ try {
 } catch (err) {
   const msg = (err && (err.message || err.toString())) || JSON.stringify(err) || 'unknown';
   document.getElementById('loading').innerHTML =
-    `<p style="color:#ff6060">フォントの読み込みに失敗しました<br><small>${msg}</small></p>
-     <pre style="color:#aaa;font-size:11px;margin-top:1rem;text-align:left;max-width:600px;margin:1rem auto;white-space:pre-wrap">${JSON.stringify(err, Object.getOwnPropertyNames(err||{}), 2)}</pre>`;
+    `<p style="color:#c0392b;font-family:monospace;font-size:13px">フォントの読み込みに失敗しました<br><br><small>${msg}</small></p>
+     <pre style="color:#999;font-size:10px;margin-top:1rem;text-align:left;white-space:pre-wrap;max-width:600px;margin:1rem auto">${JSON.stringify(err, Object.getOwnPropertyNames(err||{}), 2)}</pre>`;
   console.error('opentype load error:', err);
 }
+
 })();
 </script>
 </body>
